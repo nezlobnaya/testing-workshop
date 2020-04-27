@@ -18,7 +18,7 @@ import ItemList from '../item-list'
 
 // and here's an outline example of your first test:
 
-test('title', () => {
+test('renders "no items" when no items are given', () => {
   const container = document.createElement('div')
   ReactDOM.render(<ItemList items={[]} />, container)
   expect(container.textContent).toMatch('no items')
