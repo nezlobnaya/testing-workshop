@@ -34,4 +34,4 @@ test('snapshot', () => {
   // That's just because the container will always be the same. A div.
   // So no reason to include that in the snapshot.
   expect(container.firstChild).toMatchSnapshot()
-})
+})   
