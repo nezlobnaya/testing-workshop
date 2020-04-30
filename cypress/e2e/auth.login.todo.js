@@ -6,23 +6,31 @@
 import {generate} from '../utils'
 
 describe('authentication', () => {
-  beforeEach(() => cy.logout())
+
+  let user
+  beforeEach(() => { 
+    return cy
+      .logout()
+         // you'll want to first create a new user.
+      .createNewUser()
+      .then(u => (user = u))
+          //visit the app: visit
+      .visit('/')
+  })
 
   it('should allow existing users to login', () => {
-    // you'll want to first create a new user.
-    // This custom cypress command is similar to a promise, so you can do:
-    // cy.createNewUser().then(user => {
-    //   more cy commands here
-    // })
-    //
-    // With the user created, go ahead and use the cy commands to:
-    // 1. visit the app: visitApp
-    // 2. Click the login link
-    // 3. type the user's username in the username field
-    // 4. type the user's password in the password field
-    // 5. submit the form by clicking the submit button
-    //
+    cy
+     // 2. Click the login link
+      .getByText('Login').click()
+          // 3. type the user's username in the username field
+      .getByLabelText('username').type(user.username)
+        // 4. type the user's password in the password field
+      .getByLabelText('password').type(user.password)
+          // 5. submit the form by clicking the submit button
+      .getByText('submit').click()
     // Finally assert the route changed to '/'
+      .assertRoute('/')
+    cy.getByTestId('username-display').should('contain', user.username)
     // and verify that the display name contains user.username
   })
 
